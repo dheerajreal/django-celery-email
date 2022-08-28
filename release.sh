@@ -4,5 +4,5 @@
 # only do this after a test build.
 
 rm -rf dist build *.egg-info
-python setup.py sdist bdist_wheel
+python setup.py sdist bdist_wheel --universal
 twine upload -s dist/*

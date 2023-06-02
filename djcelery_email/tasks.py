@@ -12,7 +12,7 @@ from djcelery_email.utils import dict_to_email, email_to_dict
 # code assuming otherwise.
 
 TASK_CONFIG = {'name': 'djcelery_email_send_multiple', 'ignore_result': True}
-TASK_CONFIG.update(settings.CELERY_EMAIL_TASK_CONFIG)
+TASK_CONFIG |= settings.CELERY_EMAIL_TASK_CONFIG
 
 # import base if string to allow a base celery task
 if 'base' in TASK_CONFIG and isinstance(TASK_CONFIG['base'], str):
@@ -25,7 +25,7 @@ def send_emails(messages, backend_kwargs=None, **kwargs):
     # backward compat: handle **kwargs and missing backend_kwargs
     combined_kwargs = {}
     if backend_kwargs is not None:
-        combined_kwargs.update(backend_kwargs)
+        combined_kwargs |= backend_kwargs
     combined_kwargs.update(kwargs)
 
     # backward compat: catch single object or dict

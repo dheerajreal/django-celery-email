@@ -75,11 +75,11 @@ def dict_to_email(messagedict):
     message_attributes = ['content_subtype', 'mixed_subtype']
     if settings.CELERY_EMAIL_MESSAGE_EXTRA_ATTRIBUTES:
         message_attributes.extend(settings.CELERY_EMAIL_MESSAGE_EXTRA_ATTRIBUTES)
-    attributes_to_copy = {}
-    for attr in message_attributes:
-        if attr in message_kwargs:
-            attributes_to_copy[attr] = message_kwargs.pop(attr)
-
+    attributes_to_copy = {
+        attr: message_kwargs.pop(attr)
+        for attr in message_attributes
+        if attr in message_kwargs
+    }
     # remove attachments from message_kwargs then reinsert after base64 decoding
     attachments = message_kwargs.pop('attachments')
     message_kwargs['attachments'] = []

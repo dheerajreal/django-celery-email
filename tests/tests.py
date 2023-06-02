@@ -130,7 +130,7 @@ class TaskTests(TestCase):
     def test_send_multiple_email_objects(self):
         """ It should accept and send a list of EmailMessage objects. """
         N = 10
-        msgs = [mail.EmailMessage() for i in range(N)]
+        msgs = [mail.EmailMessage() for _ in range(N)]
         tasks.send_emails([email_to_dict(msg) for msg in msgs],
                           backend_kwargs={})
 
@@ -141,7 +141,7 @@ class TaskTests(TestCase):
     def test_send_multiple_email_dicts(self):
         """ It should accept and send a list of EmailMessage dicts. """
         N = 10
-        msgs = [mail.EmailMessage() for i in range(N)]
+        msgs = [mail.EmailMessage() for _ in range(N)]
         tasks.send_emails(msgs, backend_kwargs={})
 
         self.assertEqual(len(mail.outbox), N)
@@ -151,7 +151,7 @@ class TaskTests(TestCase):
     def test_send_multiple_email_dicts_response(self):
         """ It should return the number of messages sent. """
         N = 10
-        msgs = [mail.EmailMessage() for i in range(N)]
+        msgs = [mail.EmailMessage() for _ in range(N)]
         messages_sent = tasks.send_emails(msgs, backend_kwargs={})
         self.assertEqual(messages_sent, N)
         self.assertEqual(len(mail.outbox), N)
